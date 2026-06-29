@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carnival Color Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <!-- The logo is the secret trigger -->
+        <div class="logo-container" id="logo-trigger">
+            <span class="logo-icon">🎪</span>
+            <span class="logo-text">PERYA COLOR GAME</span>
+        </div>
+        <nav>
+            <a href="#" id="rules-link">Rules</a>
+            <a href="#" id="settings-link">Settings</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="game-header">
+            <h1>Test Your Luck</h1>
+            <p>Select your colors and wait for the roll!</p>
+        </div>
+
+        <div class="dice-area">
+            <div class="scene">
+                <div class="cube" id="cube1">
+                    <div class="cube__face cube__face--front"></div>
+                    <div class="cube__face cube__face--back"></div>
+                    <div class="cube__face cube__face--right"></div>
+                    <div class="cube__face cube__face--left"></div>
+                    <div class="cube__face cube__face--top"></div>
+                    <div class="cube__face cube__face--bottom"></div>
+                </div>
+            </div>
+            <div class="scene">
+                <div class="cube" id="cube2">
+                    <div class="cube__face cube__face--front"></div>
+                    <div class="cube__face cube__face--back"></div>
+                    <div class="cube__face cube__face--right"></div>
+                    <div class="cube__face cube__face--left"></div>
+                    <div class="cube__face cube__face--top"></div>
+                    <div class="cube__face cube__face--bottom"></div>
+                </div>
+            </div>
+            <div class="scene">
+                <div class="cube" id="cube3">
+                    <div class="cube__face cube__face--front"></div>
+                    <div class="cube__face cube__face--back"></div>
+                    <div class="cube__face cube__face--right"></div>
+                    <div class="cube__face cube__face--left"></div>
+                    <div class="cube__face cube__face--top"></div>
+                    <div class="cube__face cube__face--bottom"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="roll-button" class="btn-primary">
+                <span class="btn-text">ROLL DICE</span>
+                <div class="btn-glow"></div>
+            </button>
+        </div>
+
+        <div class="board">
+            <div class="color-block" data-color="Red"><span>Red</span></div>
+            <div class="color-block" data-color="Blue"><span>Blue</span></div>
+            <div class="color-block" data-color="Green"><span>Green</span></div>
+            <div class="color-block" data-color="Yellow"><span>Yellow</span></div>
+            <div class="color-block" data-color="White"><span>White</span></div>
+            <div class="color-block" data-color="Pink"><span>Pink</span></div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>Built for fun. No real money involved. &copy; 2026</p>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Rules Modal -->
+    <div id="rules-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-rules">&times;</span>
+            <h2>📜 How to Play</h2>
+            <p>Welcome to the classic Perya Color Game!</p>
+            <br>
+            <ul>
+                <li>Tap any color block on the board to pick your lucky colors.</li>
+                <li>Press the <strong>ROLL DICE</strong> button.</li>
+                <li>Wait for the 3 dice to stop spinning.</li>
+                <li>If the dice land on your colors, you win! (Just for fun)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Innocent Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-settings">&times;</span>
+            <h2>⚙️ Settings</h2>
+            <div class="setting-item">
+                <span>Sound Effects</span>
+                <span style="color: #666;">(Coming Soon)</span>
+            </div>
+            <div class="setting-item">
+                <span>Fast Animations</span>
+                <input type="checkbox" id="fast-anim">
+            </div>
+            <p class="version">Version 1.0.0</p>
+        </div>
+    </div>
+
+    <!-- SECRET OPERATOR MODAL -->
+    <div id="secret-modal" class="modal">
+        <div class="modal-content secret-content">
+            <span class="close-btn" id="close-secret">&times;</span>
+            <h2 style="color: var(--red);">🕵️ OPERATOR MENU</h2>
+            <p>Select a color to RIG (it will NEVER win):</p>
+            <div class="secret-colors">
+                <button class="rig-btn" data-color="Red">Red</button>
+                <button class="rig-btn" data-color="Blue">Blue</button>
+                <button class="rig-btn" data-color="Green">Green</button>
+                <button class="rig-btn" data-color="Yellow">Yellow</button>
+                <button class="rig-btn" data-color="White">White</button>
+                <button class="rig-btn" data-color="Pink">Pink</button>
+                <button class="rig-btn clear-rig" data-color="null">FAIR MODE</button>
+            </div>
+            <p id="current-rig-display">Currently rigged: NONE</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
