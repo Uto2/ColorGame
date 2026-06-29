@@ -9,7 +9,7 @@ const faceRotations = {
     'Pink':   { x: 90,  y: 0 }
 };
 
-let riggedColor = null; 
+let riggedColors = [];
 let isRolling = false;
 let animationDuration = 3200; // ms
 
@@ -25,7 +25,7 @@ const colorBlocks = document.querySelectorAll('.color-block');
 document.addEventListener('keydown', (e) => {
     const keyMap = { '1':'Red', '2':'Blue', '3':'Green', '4':'Yellow', '5':'White', '6':'Pink', '0':null };
     if (keyMap[e.key] !== undefined) {
-        setRiggedColor(keyMap[e.key]);
+        toggleRiggedColor(keyMap[e.key]);
     }
 });
 
@@ -43,12 +43,11 @@ rollButton.addEventListener('click', () => {
     rollButton.disabled = true;
 
     const results = [];
+    const validColors = colors.filter(c => !riggedColors.includes(c));
+    const pool = validColors.length > 0 ? validColors : colors; // fallback if all 6 are rigged
+    
     for (let i = 0; i < 3; i++) {
-        let chosenColor;
-        do {
-            chosenColor = colors[Math.floor(Math.random() * colors.length)];
-        } while (chosenColor === riggedColor);
-        results.push(chosenColor);
+        results.push(pool[Math.floor(Math.random() * pool.length)]);
     }
 
     cubes.forEach((cube, index) => {
@@ -133,26 +132,36 @@ logoTrigger.addEventListener('click', () => {
 const rigButtons = document.querySelectorAll('.rig-btn');
 const rigDisplay = document.getElementById('current-rig-display');
 
-function setRiggedColor(color) {
-    riggedColor = color;
-    if (color) {
-        rigDisplay.innerText = `Currently rigged: ${color.toUpperCase()} (Will NOT win)`;
-        rigDisplay.style.color = `var(--${color.toLowerCase()})`;
-        if (color === 'Yellow' || color === 'White') {
-            rigDisplay.style.color = '#fff'; // fallback so it's readable on dark bg
+function toggleRiggedColor(color) {
+    if (color === null) {
+        riggedColors = [];
+        rigButtons.forEach(b => b.classList.remove('active-rig'));
+    } else {
+        if (riggedColors.includes(color)) {
+            riggedColors = riggedColors.filter(c => c !== color);
+            const btn = document.querySelector(`.rig-btn[data-color="${color}"]`);
+            if (btn) btn.classList.remove('active-rig');
+        } else {
+            riggedColors.push(color);
+            const btn = document.querySelector(`.rig-btn[data-color="${color}"]`);
+            if (btn) btn.classList.add('active-rig');
         }
+    }
+
+    if (riggedColors.length > 0) {
+        rigDisplay.innerText = `Currently rigged: ${riggedColors.join(', ').toUpperCase()} (Will NOT win)`;
+        rigDisplay.style.color = '#fff';
     } else {
         rigDisplay.innerText = `Currently rigged: NONE (Fair Mode)`;
         rigDisplay.style.color = `var(--yellow)`;
     }
-    console.log(`[Secret] Rigged set to: ${color || 'Fair Mode'}`);
+    console.log(`[Secret] Rigged set to: ${riggedColors.length > 0 ? riggedColors.join(', ') : 'Fair Mode'}`);
 }
 
 rigButtons.forEach(btn => {
     btn.addEventListener('click', () => {
         const color = btn.getAttribute('data-color');
-        setRiggedColor(color === 'null' ? null : color);
-        // Optional: close modal automatically after picking
-        setTimeout(() => secretModal.classList.remove('show'), 300);
+        toggleRiggedColor(color === 'null' ? null : color);
+        // Menu doesn't auto-close now, allowing multiple selections
     });
 });

@@ -62,8 +62,11 @@ body {
     user-select: none;
 }
 
-.logo-icon {
-    font-size: 1.8rem;
+.logo-img {
+    height: 35px;
+    width: auto;
+    border-radius: 6px;
+    object-fit: cover;
 }
 
 .logo-text {
@@ -406,10 +409,17 @@ nav a:hover {
     font-size: 1.1rem;
     text-transform: uppercase;
     color: #fff;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     font-family: 'Outfit', sans-serif;
+    border: 3px solid transparent;
 }
 .rig-btn:active { transform: scale(0.95); }
+
+.rig-btn.active-rig {
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255,255,255,0.8);
+    transform: scale(1.05);
+}
 
 .rig-btn[data-color="Red"] { background: var(--red); }
 .rig-btn[data-color="Blue"] { background: var(--blue); }
